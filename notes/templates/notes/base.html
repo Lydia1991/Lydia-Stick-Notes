@@ -1,0 +1,90 @@
+{% load static %}
+{% comment %}
+    TEMPLATE DOCSTRING (PEP 257 Standard):
+    Global Base Template for the Sticky Notes application.
+    Defines the stylish purple header, the floating search bar, 
+    and the main content block used across all CRUD pages.
+    Includes Bootstrap 5 for modern layout components.
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Notes</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
+    
+    <style>
+        body { 
+            background-color: #efefef; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+        /* Purple Header Section */
+        .header-purple { 
+            background-color: #8e7cc3; 
+            height: 140px; 
+            display: flex; 
+            align-items: center; 
+            padding-left: 10%; 
+        }
+        .header-title { 
+            color: white; 
+            font-weight: bold; 
+            font-size: 2.2rem; 
+        }
+        /* Floating Search Container */
+        .search-container { 
+            position: relative; 
+            width: 600px; 
+            margin: -25px auto 40px auto; 
+            z-index: 100; 
+        }
+        .search-bar { 
+            border-radius: 50px; 
+            padding: 12px 25px; 
+            border: none; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            width: 100%; 
+            outline: none; 
+        }
+        footer { 
+            padding: 40px 0; 
+            color: #999; 
+            font-size: 0.85rem; 
+            text-align: center; 
+            width: 100%; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Area -->
+    <div class="header-purple">
+        <h1 class="header-title">Sticky Notes</h1>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-container">
+        <form action="{% url 'note_list' %}" method="GET">
+            <input type="text" name="q" class="search-bar" placeholder="Search your notes..." value="{{ request.GET.q }}">
+        </form>
+    </div>
+
+    <!-- Main Content Injection -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Project Footer -->
+    <footer>
+        For more info<span style="color: #e91e63;">contact</span> lrncube222@gmail.com
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net"></script>
+</body>
+</html>

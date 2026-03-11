@@ -1,0 +1,46 @@
+{% extends 'notes/base.html' %}
+
+{% comment %}
+    TEMPLATE DOCSTRING (PEP 257 Standard):
+    Detailed View (Read) for a specific Sticky Note instance.
+    Displays the full title, content with line breaks, and creation metadata.
+    Provides navigation links to the Update (Edit) form and the main list.
+{% endcomment %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Detailed Note Card -->
+            <div class="card shadow sticky-note-card p-4" style="border-radius: 15px; border: none; background-color: #fdfdfd;">
+                <div class="card-body">
+                    <h1 class="display-6 fw-bold border-bottom pb-3 mb-4 text-uppercase" style="color: #333;">
+                        {{ note.title }}
+                    </h1>
+                    
+                    <!-- Preserves vertical lists and spacing -->
+                    <div class="lead" style="color: #444; line-height: 1.6;">
+                        {{ note.content|linebreaks }}
+                    </div>
+                    
+                    <hr class="mt-5" style="opacity: 0.1;">
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">
+                            Updated on: {{ note.updated_at|date:"d M Y, H:i" }}
+                        </small>
+                        <div>
+                            <a href="{% url 'note_update' note.pk %}" class="btn btn-dark px-4 rounded-pill">Edit</a>
+                            <a href="{% url 'note_list' %}" class="btn btn-outline-secondary px-4 rounded-pill">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-5 text-center text-muted" style="font-size: 0.85rem; padding-bottom: 40px;">
+    Made With <span style="color: #e91e63;">❤️</span> by Lee
+</footer>
+{% endblock %}

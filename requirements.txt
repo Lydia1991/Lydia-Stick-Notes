@@ -1,0 +1,17 @@
+# ==============================================================================
+# REQUIREMENTS FOR STICKY NOTES APPLICATION
+# ==============================================================================
+# This file lists all Python dependencies required to run the application 
+# in a virtual environment (venv). 
+#
+# To install these, run: pip install -r requirements.txt
+# ==============================================================================
+
+# Core Web Framework
+Django>=4.0
+
+# Library used for Bootstrap 5 integration in templates
+django-bootstrap5
+
+# Optional: Library for database/environment management (if used)
+# python-dotenv

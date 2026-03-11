@@ -1,0 +1,36 @@
+{% extends 'notes/base.html' %}
+
+{% comment %}
+    TEMPLATE DOCSTRING (PEP 257 Standard):
+    Confirmation page for the Delete (D) use case in the CRUD lifecycle.
+    Displays a warning card to prevent accidental deletion of a Note instance.
+    Includes CSRF protection for the POST request.
+{% endcomment %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Using your yellow sticky note style even for the delete warning -->
+    <div class="card mx-auto sticky-note-card shadow" style="max-width: 500px; border: 2px solid #dc3545 !important;">
+        <div class="card-body text-center p-5">
+            <h2 class="text-danger fw-bold mb-4">Confirm Delete</h2>
+            <p class="lead">
+                Are you sure you want to permanently delete the note: <br>
+                <strong>"{{ object.title }}"</strong>?
+            </p>
+            
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger btn-lg">Yes, Delete It</button>
+                    <a href="{% url 'note_list' %}" class="btn btn-outline-secondary">No, Go Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-5 text-center text-muted" style="font-size: 0.85rem; padding-bottom: 40px;">
+    Made With <span style="color: #e91e63;">❤️</span> by Lee
+</footer>
+{% endblock %}
+

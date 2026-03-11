@@ -1,0 +1,22 @@
+# ==========================================
+# HYPERIONDEV PROJECT EXCLUSIONS
+# ==========================================
+
+# 1. Virtual Environment (DO NOT UPLOAD)
+venv/
+env/
+ENV/
+
+# 2. Database (DO NOT UPLOAD LOCAL DATA)
+db.sqlite3
+
+# 3. Python Cache
+__pycache__/
+*.pyc
+
+# 4. Static Files (GENERATED)
+staticfiles/
+
+# 5. OS Files
+.DS_Store
+Thumbs.db

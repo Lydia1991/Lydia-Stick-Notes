@@ -1,0 +1,68 @@
+{% extends 'notes/base.html' %}
+
+{% comment %}
+    TEMPLATE DOCSTRING (PEP 257 Standard):
+    Form template for the Create (C) and Update (U) use cases.
+    Forces the input interface into a fixed 3x3 inch (288px) square.
+    Includes custom CSS to shrink Django form fields and lock the 
+    Save/Cancel buttons at the bottom of the card.
+{% endcomment %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-4">
+    <!-- FIXED 3x3 SQUARE: 288px (3 inches) -->
+    <div class="card shadow border-0" 
+         style="background-color: #fff382; width: 288px; height: 288px; display: flex; flex-direction: column; overflow: hidden; border-radius: 12px; box-sizing: border-box;">
+        
+        <div class="card-body d-flex flex-column" style="padding: 15px; height: 100%; box-sizing: border-box;">
+            
+            <!-- HEADER -->
+            <h6 class="fw-bold text-center border-bottom pb-1 mb-2" style="font-size: 0.8rem; flex-shrink: 0;">
+                {% if object %}UPDATE NOTE{% else %}NEW NOTE{% endif %}
+            </h6>
+            
+            <!-- FORM SECTION -->
+            <form method="post" style="flex-grow: 1; display: flex; flex-direction: column; overflow: hidden;">
+                {% csrf_token %}
+                
+                <!-- This area scrolls so it NEVER pushes the buttons out -->
+                <div style="flex-grow: 1; overflow-y: auto; font-size: 0.75rem; padding-right: 5px;">
+                    {% for field in form %}
+                        <div class="mb-1">
+                            <label class="fw-bold mb-0 d-block" style="font-size: 0.7rem;">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- FOOTER: Locked at the very bottom -->
+                <div class="mt-auto pt-2 border-top d-flex gap-2" style="flex-shrink: 0; height: 40px; align-items: center;">
+                    <button type="submit" class="btn btn-sm btn-dark w-100 shadow-sm" style="font-size: 0.65rem; font-weight: bold; padding: 4px;">
+                        SAVE
+                    </button>
+                    <a href="{% url 'note_list' %}" class="btn btn-sm btn-outline-secondary w-100" style="font-size: 0.65rem; font-weight: bold; padding: 4px;">
+                        CANCEL
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* THE CRITICAL FIX: Shrinks the actual typing boxes to fit the 3x3 square */
+    input, select, textarea {
+        width: 100% !important;
+        padding: 2px 8px !important;
+        font-size: 0.75rem !important;
+        border-radius: 4px !important;
+        border: 1px solid #ccc !important;
+        margin-bottom: 2px !important;
+    }
+    textarea { height: 50px !important; resize: none; }
+</style>
+
+<footer class="mt-5 text-center text-muted" style="font-size: 0.85rem; padding-bottom: 40px;">
+    Made With <span style="color: #e91e63;">❤️</span> by Lee
+</footer>
+{% endblock %}

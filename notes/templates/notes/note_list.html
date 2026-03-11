@@ -1,0 +1,52 @@
+{% extends 'notes/base.html' %}
+
+{% comment %}
+    TEMPLATE DOCSTRING (PEP 257 Standard):
+    Main dashboard for the Sticky Notes app displaying a horizontal 3x3 grid.
+    Features:
+    - Fixed 288px (3 inch) square dimensions to prevent stretching.
+    - Absolute-positioned 'Edit' and 'Delete' text links in the top-right corner.
+    - Custom divider line to separate header metadata from scrollable content.
+{% endcomment %}
+
+{% block content %}
+<div class="mb-4" style="margin-left: 20px;">
+    <a href="{% url 'note_create' %}" class="btn btn-link text-primary fw-bold text-decoration-none" style="font-size: 1.1rem;">+ New Note</a>
+</div>
+
+<!-- 3x3 Grid Layout -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, 288px); gap: 25px; justify-content: center; padding-bottom: 60px;">
+    
+    {% for note in notes %}
+    <!-- THE TRUE STICKY NOTE: No Card Header, No Footer -->
+    <div class="shadow-sm" 
+         style="background-color: {{ note.color }} !important; width: 288px; height: 288px; border-radius: 5px; position: relative; padding: 20px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column;">
+        
+        <!-- 1. ACTIONS (Pinned to top-right corner using absolute positioning) -->
+        <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 10px; z-index: 10;">
+            <a href="{% url 'note_update' note.pk %}" class="text-dark fw-bold text-decoration-none" style="font-size: 0.7rem; background: rgba(255,255,255,0.3); padding: 2px 5px; border-radius: 3px;">Edit</a>
+            <a href="{% url 'note_delete' note.pk %}" class="text-danger fw-bold text-decoration-none" style="font-size: 0.7rem; background: rgba(255,255,255,0.3); padding: 2px 5px; border-radius: 3px;">Delete</a>
+        </div>
+
+        <!-- 2. TITLE & DATE SECTION -->
+        <div style="flex-shrink: 0; padding-right: 60px;">
+            <strong style="color: #333; font-size: 1rem; display: block;">Title: {{ note.title|truncatechars:15 }}</strong>
+            <small style="font-size: 0.65rem; color: rgba(0,0,0,0.5); font-weight: bold;">{{ note.updated_at|date:"d M, G:i" }}</small>
+        </div>
+
+        <!-- 3. THE DIVIDER LINE (Perfectly separating title from content) -->
+        <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 10px 0; flex-shrink: 0; opacity: 1;">
+
+        <!-- 4. CONTENT (Scrollable area inside the square) -->
+        <div style="flex-grow: 1; overflow-y: auto; font-size: 0.9rem; color: #444; line-height: 1.4; white-space: pre-wrap;">
+            {{ note.content|linebreaks }}
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+<footer class="mt-5 text-center text-muted" style="font-size: 0.85rem; padding-bottom: 40px;">
+    Made With <span style="color: #e91e63;">❤️</span> by Lee
+</footer>
+{% endblock %}
